@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Giải PT bậc 2</title>
+
+<style>
+body {
+    font-family: Arial;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+}
+
+.container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    width: 350px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.debai {
+    background: #f0f4ff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.form-group {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+label {
+    width: 80px;
+}
+
+input {
+    flex: 1;
+    padding: 6px;
+}
+
+button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.ketqua {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Giải phương trình bậc 2</h2>
+
+    <!-- ĐỀ BÀI -->
+    <div class="debai">
+        <b>Đề bài:</b><br>
+        Nhập 3 số a, b, c. Giải phương trình:
+        <br><b>ax² + bx + c = 0</b>
+    </div>
+
+    <div class="form-group">
+        <label>a:</label>
+        <input type="number" id="a">
+    </div>
+
+    <div class="form-group">
+        <label>b:</label>
+        <input type="number" id="b">
+    </div>
+
+    <div class="form-group">
+        <label>c:</label>
+        <input type="number" id="c">
+    </div>
+
+    <button onclick="giai()">Giải</button>
+
+    <div class="ketqua" id="ketqua"></div>
+</div>
+
+<script>
+function giaiPTBac2(a, b, c) {
+    if (a == 0) {
+        if (b == 0) {
+            return (c == 0) ? "Vô số nghiệm" : "Vô nghiệm";
+        } else {
+            return "PT bậc 1: x = " + (-c / b);
+        }
+    }
+
+    let delta = b*b - 4*a*c;
+</body>
+</html>
+<div class="container">
+    <h2>📋 To-Do List </h2>
+
+    <input type="text" id="taskName" placeholder="Tên công việc">
+    <input type="date" id="deadline">
+    <button class="add-btn" onclick="addTask()">Thêm</button>
+
+    <div class="filters">
+        <button onclick="filterTasks('all')">Tất cả</button>
+        <button onclick="filterTasks('done')">Hoàn thành</button>
+        <button onclick="filterTasks('todo')">Chưa xong</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Deadline</th>
+                <th>✔</th>
+                <th>Xóa</th>
+            </tr>
+        </thead>
+        <tbody id="taskList"></tbody>
+    </table>
+</div>
+
+<script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let currentFilter = "all";
+
+    function saveTasks() {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function addTask() {
+        let name = document.getElementById("taskName").value;
+        let deadline = document.getElementById("deadline").value;
+
+        if (!name || !deadline) {
+            alert("Nhập đầy đủ nhé!");
+            return;
+        }
+
+        tasks.push({
+            name,
+            deadline,
+            done: false
+        });
+
+        saveTasks();
+        renderTasks();
+
+        document.getElementById("taskName").value = "";
+        document.getElementById("deadline").value = "";
+    }
+
+    function toggleTask(index) {
+        tasks[index].done = !tasks[index].done;
+        saveTasks();
+        renderTasks();
+    }
+
+    function deleteTask(index) {
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+    }
+
+    function filterTasks(type) {
+        currentFilter = type;
+        renderTasks();
+    }
+
+    function renderTasks() {
+        let list = document.getElementById("taskList");
+        list.innerHTML = "";
+
+        tasks.forEach((task, index) => {
+
+            if (currentFilter === "done" && !task.done) return;
+            if (currentFilter === "todo" && task.done) return;
+
+            let row = `
+                <tr>
+                    <td class="${task.done ? 'done' : ''}">${task.name}</td>
+                    <td class="${task.done ? 'done' : ''}">${task.deadline}</td>
+                    <td>
+                        <input type="checkbox" ${task.done ? "checked" : ""} 
+                        onclick="toggleTask(${index})">
+                    </td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteTask(${index})">X</button>
+                    </td>
+                </tr>
+            `;
+
+            list.innerHTML += row;
+        });
+    }
+
+    renderTasks();
+</script>
+
+</body>
+</html>
