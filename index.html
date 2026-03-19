@@ -1,125 +1,76 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Giải PT bậc 2</title>
+    <meta charset="UTF-8">
+    <title>To-Do List Pro</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef2f7;
+            padding: 20px;
+        }
 
-<style>
-body {
-    font-family: Arial;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #74ebd5, #9face6);
-}
+        h2 {
+            text-align: center;
+        }
 
-.container {
-    background: white;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    width: 350px;
-}
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
 
-h2 {
-    text-align: center;
-}
+        input, button, select {
+            padding: 8px;
+            margin: 5px;
+        }
 
-.debai {
-    background: #f0f4ff;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 14px;
-}
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
 
-.form-group {
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-}
+        .add-btn {
+            background: #28a745;
+            color: white;
+        }
 
-label {
-    width: 80px;
-}
+        .delete-btn {
+            background: red;
+            color: white;
+        }
 
-input {
-    flex: 1;
-    padding: 6px;
-}
+        .filters button {
+            background: #007bff;
+            color: white;
+        }
 
-button {
-    width: 100%;
-    margin-top: 15px;
-    padding: 10px;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
 
-button:hover {
-    background: #45a049;
-}
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
 
-.ketqua {
-    margin-top: 15px;
-    font-weight: bold;
-    text-align: center;
-}
-</style>
+        .done {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
-    <h2>Giải phương trình bậc 2</h2>
-
-    <!-- ĐỀ BÀI -->
-    <div class="debai">
-        <b>Đề bài:</b><br>
-        Nhập 3 số a, b, c. Giải phương trình:
-        <br><b>ax² + bx + c = 0</b>
-    </div>
-
-    <div class="form-group">
-        <label>a:</label>
-        <input type="number" id="a">
-    </div>
-
-    <div class="form-group">
-        <label>b:</label>
-        <input type="number" id="b">
-    </div>
-
-    <div class="form-group">
-        <label>c:</label>
-        <input type="number" id="c">
-    </div>
-
-    <button onclick="giai()">Giải</button>
-
-    <div class="ketqua" id="ketqua"></div>
-</div>
-
-<script>
-function giaiPTBac2(a, b, c) {
-    if (a == 0) {
-        if (b == 0) {
-            return (c == 0) ? "Vô số nghiệm" : "Vô nghiệm";
-        } else {
-            return "PT bậc 1: x = " + (-c / b);
-        }
-    }
-
-    let delta = b*b - 4*a*c;
-</body>
-</html>
-<div class="container">
-    <h2>📋 To-Do List </h2>
+    <h2>📋 Danh sách quản lí công việc</h2>
 
     <input type="text" id="taskName" placeholder="Tên công việc">
     <input type="date" id="deadline">
@@ -136,7 +87,7 @@ function giaiPTBac2(a, b, c) {
             <tr>
                 <th>Tên</th>
                 <th>Deadline</th>
-                <th>✔</th>
+                <th>Trạng thái</th>
                 <th>Xóa</th>
             </tr>
         </thead>
@@ -205,8 +156,11 @@ function giaiPTBac2(a, b, c) {
                     <td class="${task.done ? 'done' : ''}">${task.name}</td>
                     <td class="${task.done ? 'done' : ''}">${task.deadline}</td>
                     <td>
-                        <input type="checkbox" ${task.done ? "checked" : ""} 
-                        onclick="toggleTask(${index})">
+                        <label style="color:${task.done ? 'green' : 'orange'}">
+                            <input type="checkbox" ${task.done ? "checked" : ""} 
+                            onclick="toggleTask(${index})">
+                            ${task.done ? "Hoàn thành" : "Chưa xong"}
+                        </label>
                     </td>
                     <td>
                         <button class="delete-btn" onclick="deleteTask(${index})">X</button>
